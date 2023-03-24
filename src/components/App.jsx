@@ -15,6 +15,7 @@ import Register from './Register';
 import Login from './Login';
 import ProtectedRouteElement from './ProtectedRoute';
 import InfoTooltip from './InfoTooltip';
+import auth from '../utils/auth.js';
 
 function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
@@ -120,37 +121,86 @@ function App() {
 
   function handleLogin(email, password) {
     // идем на сервер
-    // в случае успеха
-    setLoggedIn(true);
-    navigate('/', { replace: true });
-
-    // в случае не успеха
-    // setInfoTooltipOpen(true);
-    // setInfoSuccess(false);
-    // setInfoMessage(`Что-то пошло не так!
-    // Попробуйте ещё раз.`)
-  }
-
-  function handleRegister(email, password) {
-    navigate('/signin', { replace: true });
-    setInfoTooltipOpen(true);
-    setInfoSuccess(true);
-    setInfoMessage(`Вы успешно зарегистрировались!`)
-  }
-
-
-  useEffect(() => {
-    Promise.all([api.getProfile(), api.getInitialCards()])
-      .then(([profile, initialCards]) => {
-        // установка состояния профиля
-        setCurrentUser(profile);
-        // установка состояния карточек
-        setCards(initialCards);
+    auth.login(email, password)
+      .then((data) => {
+        // в случае успеха
+        if (data.token) {
+          localStorage.setItem('jwt', data.token);
+          setLoggedIn(true);
+          navigate('/', { replace: true });
+        }
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
+        // в случае не успеха
+        setInfoTooltipOpen(true);
+        setInfoSuccess(false);
+        setInfoMessage(`Что-то пошло не так!
+      Попробуйте ещё раз.`)
       });
+  }
+
+  function handleRegister(email, password) {
+    // идем на сервер
+    auth
+      .register(email, password)
+      .then((data) => {
+        // в случае успеха
+        if (data.data) {
+          navigate('/signin', { replace: true });
+          setInfoTooltipOpen(true);
+          setInfoSuccess(true);
+          setInfoMessage(`Вы успешно зарегистрировались!`)
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        // в случае не успеха
+        setInfoTooltipOpen(true);
+        setInfoSuccess(false);
+        setInfoMessage(`Что-то пошло не так!
+    Попробуйте ещё раз.`)
+      });
+  }
+
+
+
+  const handleTokenCheck = async () => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      auth.checkToken(token)
+        .then((data) => {
+          if (data.email) {
+            return true
+          } else return false
+        })
+        .catch(() => { return false });
+    }
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      auth.checkToken(token)
+        .then((data) => {
+          if (data.data) {
+            setLoggedIn(true);
+            navigate("/", { replace: true })
+            Promise.all([api.getProfile(), api.getInitialCards()])
+              .then(([profile, initialCards]) => {
+                // установка состояния профиля
+                setCurrentUser(profile);
+                // установка состояния карточек
+                setCards(initialCards);
+              })
+              .catch((err) => {
+                console.log(err);
+                alert(`Ошибка: ${err}`);
+              });
+          }
+        })
+        .catch(() => { return false });
+    }
   }, []);
 
   function handleCardLike(card) {
