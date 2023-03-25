@@ -26,10 +26,33 @@ const Register = ({ onRegister }) => {
         Регистрация.
       </p>
       <form onSubmit={handleSubmit} className="register__form">
-        <input id="email" name="email" type="email" value={formValue.email} onChange={handleChange} />
-        <input id="password" name="password" type="password" value={formValue.password} onChange={handleChange} />
+        <input
+          value={formValue.email}
+          id="email"
+          name="email"
+          type="email"
+          // className='popup__input popup__input_type_name'
+          placeholder='Email'
+          minLength={3}
+          maxLength={40}
+          onChange={handleChange}
+          required />
+        <input
+          value={formValue.password}
+          id="password"
+          name="password"
+          type="password"
+          // className='popup__input popup__input_type_name'
+          placeholder='Пароль'
+          minLength={4}
+          maxLength={20}
+          onChange={handleChange}
+          required />
         <div className="register__button-container">
-          <button type="submit" onSubmit={handleSubmit} className="register__link">Зарегистрироваться</button>
+          <button
+            type="submit"
+            onSubmit={handleSubmit}
+            className="register__link">Зарегистрироваться</button>
         </div>
       </form>
       <div className="register__signin">

@@ -30,15 +30,35 @@ const Login = ({ onLogin }) => {
         Вход
       </p>
       <form onSubmit={handleSubmit} className="login__form">
-        <input required id="email" name="email" type="email" value={formValue.email} onChange={handleChange} />
-        <input required id="password" name="password" type="password" value={formValue.password} onChange={handleChange} />
+        <input
+          value={formValue.email}
+          id="email"
+          name="email"
+          type="email"
+          // className='popup__input popup__input_type_name'
+          placeholder='Email'
+          minLength={3}
+          maxLength={40}
+          onChange={handleChange}
+          required />
+        <input
+          value={formValue.password}
+          id="password"
+          name="password"
+          type="password"
+          // className='popup__input popup__input_type_name'
+          placeholder='Пароль'
+          minLength={4}
+          maxLength={20}
+          onChange={handleChange}
+          required />
         <div className="login__button-container">
           <button type="submit" className="login__link">Войти</button>
         </div>
       </form>
       <div className="login__signup">
         <p>Ещё не зарегистрированы?</p>
-        <Link to="/register" className="signup__link">Зарегистрироваться</Link>
+        <Link to="/signup" className="signup__link">Зарегистрироваться</Link>
       </div>
     </div>
   )
