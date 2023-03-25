@@ -1,0 +1,25 @@
+.login__input {
+  min-height: 27px;
+  margin: 26px 0 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
+  outline: none;
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid #cccccc;
+  /* width: 100%; */
+  /* text-overflow: ellipsis; */
+  /* width: 358px; */
+}
+
+.login__input::placeholder {
+  color: #cccccc;
+  font-weight: 400;
+  background: #000000;
+}

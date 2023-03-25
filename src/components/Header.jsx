@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
 function Header({ loggedIn, email, onSignOut }) {
-  // const location = useLocation();
 
   function handleClick() {
     onSignOut();
@@ -13,24 +12,20 @@ function Header({ loggedIn, email, onSignOut }) {
       <div>{
         loggedIn
           ?
-          <ul className="navbar__nav">
+          <ul className="header__nav header__link">
             <li>{email}</li>
-            <li><button onClick={handleClick} className="navbar__link navbar__button">Выйти</button></li>
+            <li><button onClick={handleClick} className="header__button">Выйти</button></li>
           </ul>
-          : <ul className="navbar__nav">
-            {/* {location.pathname === "/signin"
-              ? <li><Link to="/signup" className="navbar__link">Регистрация</Link></li>
-              : <li><Link to="/signin" className="navbar__link">Войти</Link></li>
-            } */}
+          : <ul className="header__nav">
             {<nav>
               <NavLink to="/signup"
                 style={({ isActive }) => {
                   return isActive ? { display: 'none' } : { display: 'block' }
                 }}
-                className="navbar__link">Регистрация</NavLink>
+                className="header__link">Регистрация</NavLink>
               <NavLink to="/signin" style={({ isActive }) => {
                 return isActive ? { display: 'none' } : { display: 'block' }
-              }} className="navbar__link">Войти</NavLink>
+              }} className="header__link">Войти</NavLink>
             </nav>
             }
           </ul>

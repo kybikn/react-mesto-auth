@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+// import '../blocks/login/login.css';
 
 const Login = ({ onLogin }) => {
   const [formValue, setFormValue] = useState({
@@ -26,40 +26,40 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className="login">
-      <p className="login__welcome">
+      <h2 className="login__title">
         Вход
-      </p>
+      </h2>
       <form onSubmit={handleSubmit} className="login__form">
-        <input
-          value={formValue.email}
-          id="email"
-          name="email"
-          type="email"
-          // className='popup__input popup__input_type_name'
-          placeholder='Email'
-          minLength={3}
-          maxLength={40}
-          onChange={handleChange}
-          required />
-        <input
-          value={formValue.password}
-          id="password"
-          name="password"
-          type="password"
-          // className='popup__input popup__input_type_name'
-          placeholder='Пароль'
-          minLength={4}
-          maxLength={20}
-          onChange={handleChange}
-          required />
-        <div className="login__button-container">
-          <button type="submit" className="login__link">Войти</button>
-        </div>
+        <fieldset className='login__box'>
+          <input
+            value={formValue.email}
+            id="email"
+            name="email"
+            type="email"
+            className='login__input'
+            placeholder='Email'
+            minLength={3}
+            maxLength={40}
+            onChange={handleChange}
+            required />
+          <input
+            value={formValue.password}
+            id="password"
+            name="password"
+            type="password"
+            className='login__input'
+            placeholder='Пароль'
+            minLength={4}
+            maxLength={20}
+            onChange={handleChange}
+            required />
+          <button
+            type="submit"
+            className="login__button"
+            onSubmit={handleSubmit}
+          >Войти</button>
+        </fieldset>
       </form>
-      <div className="login__signup">
-        <p>Ещё не зарегистрированы?</p>
-        <Link to="/signup" className="signup__link">Зарегистрироваться</Link>
-      </div>
     </div>
   )
 }

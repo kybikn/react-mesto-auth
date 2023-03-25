@@ -1,0 +1,33 @@
+.header__button {
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #a9a9a9;
+  border: none;
+  /* margin-top: 32px; */
+  /* padding: 14px 84px; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* width: 358px; */
+  /* height: 50px; */
+  /* text-align: right; */
+  /* left: 461px;
+  top: 558px; */
+  /* margin-bottom: 38px; */
+  /* margin: 216px 0 0; */
+  /* border-radius: 2px; */
+  /* transition: all 0.2s ease-in-out; */
+  /* font-style: normal; */
+  /* font-weight: 400; */
+  /* font-size: 18px; */
+  /* line-height: 22px; */
+  /* text-align: center; */
+  /* color: #000000; */
+  /* background: #ffffff; */
+}

@@ -1,0 +1,30 @@
+.login__button {
+  /* margin-top: 32px; */
+  border: none;
+  padding: 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #000000;
+  background: #ffffff;
+  /* padding: 14px 84px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 358px;
+  height: 50px;
+  cursor: pointer;
+  /* left: 461px;
+  top: 558px; */
+  /* margin-bottom: 38px; */
+  margin: 216px 0 0;
+  border-radius: 2px;
+  transition: all 0.2s ease-in-out;
+}
+
+.login__button:hover {
+  opacity: 0.85;
+}

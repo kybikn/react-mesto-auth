@@ -4,7 +4,7 @@ function InfoTooltip({ isOpen, onClose, success, message }) {
     return (
         <div
             onClick={onClose}
-            className={`popup popup_type_tooltip ${isOpen && 'popup_active'}`}
+            className={`popup ${isOpen && 'popup_active'}`}
         >
             <div className='popup__content'>
                 <button
@@ -12,16 +12,16 @@ function InfoTooltip({ isOpen, onClose, success, message }) {
                     type='button'
                 ></button>
                 {success ? < img
-                    className='profile__img'
+                    className='popup__img-tooltip'
                     src={successImg}
                     alt='success'
                 /> : < img
-                    className='profile__img'
+                    className='popup__img-tooltip'
                     src={faultImg}
                     alt='fault'
                 />
                 }
-                <p>{message}</p>
+                <p className='popup__title'>{message}</p>
             </div>
         </div>
     )
