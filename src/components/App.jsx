@@ -32,6 +32,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [cardToDelete, setCardToDelete] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [email, setEmail] = useState('');
   const [infoSuccess, setInfoSuccess] = useState(false);
   const [infoMessage, setInfoMessage] = useState('');
   const navigate = useNavigate();
@@ -122,10 +123,10 @@ function App() {
   function handleLogin(email, password) {
     // идем на сервер
     auth.login(email, password)
-      .then((data) => {
+      .then((payload) => {
         // в случае успеха
-        if (data.token) {
-          localStorage.setItem('jwt', data.token);
+        if (payload.token) {
+          localStorage.setItem('jwt', payload.token);
           setLoggedIn(true);
           navigate('/', { replace: true });
         }
@@ -144,9 +145,9 @@ function App() {
     // идем на сервер
     auth
       .register(email, password)
-      .then((data) => {
+      .then((payload) => {
         // в случае успеха
-        if (data.data) {
+        if (payload.data) {
           navigate('/signin', { replace: true });
           setInfoTooltipOpen(true);
           setInfoSuccess(true);
@@ -163,28 +164,21 @@ function App() {
       });
   }
 
-
-
-  const handleTokenCheck = async () => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      auth.checkToken(token)
-        .then((data) => {
-          if (data.email) {
-            return true
-          } else return false
-        })
-        .catch(() => { return false });
-    }
+  function handleSignOut() {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    setEmail('');
   }
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
       auth.checkToken(token)
-        .then((data) => {
-          if (data.data) {
+        .then((payload) => {
+          console.log('data', payload);
+          if (payload.data) {
             setLoggedIn(true);
+            setEmail(payload.data.email);
             navigate("/", { replace: true })
             Promise.all([api.getProfile(), api.getInitialCards()])
               .then(([profile, initialCards]) => {
@@ -201,7 +195,7 @@ function App() {
         })
         .catch(() => { return false });
     }
-  }, []);
+  }, [navigate]);
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -262,7 +256,10 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
 
       <div className='page'>
-        <Header />
+        <Header
+          loggedIn={loggedIn}
+          email={email}
+          onSignOut={handleSignOut} />
         <Routes>
           <Route
             path='/'
@@ -282,6 +279,12 @@ function App() {
             element={<Register onRegister={handleRegister} />}
           />
           <Route path="/signin" element={<Login onLogin={handleLogin} />} />
+          <Route
+            path='*'
+            element={<ProtectedRouteElement
+              element={Main}
+            />}
+          ></Route>
         </Routes>
         <Footer />
         <EditAvatarPopup
