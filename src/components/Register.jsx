@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import '../blocks/login/login.css';
 
 const Register = ({ onRegister }) => {
   const [formValue, setFormValue] = useState({
@@ -47,7 +46,7 @@ const Register = ({ onRegister }) => {
             className='login__input'
             placeholder='Пароль'
             minLength={4}
-            maxLength={20}
+            maxLength={30}
             onChange={handleChange}
             required />
           <button

@@ -48,8 +48,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                     type='text'
                     name='name'
                     placeholder='Ваше имя'
-                    minLength='2'
-                    maxLength='40'
+                    minLength={2}
+                    maxLength={40}
                     required
                 />
                 <span className='popup__input-error popup__input-name-error'></span>
@@ -66,8 +66,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                     type='text'
                     name='job'
                     placeholder='Ваша профессия'
-                    minLength='2'
-                    maxLength='200'
+                    minLength={2}
+                    maxLength={200}
                     required
                 />
                 <span className='popup__input-error popup__input-job-error'></span>

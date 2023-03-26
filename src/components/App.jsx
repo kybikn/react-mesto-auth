@@ -59,7 +59,6 @@ function App() {
     api
       .editAvatar(link)
       .then((profile) => {
-        // установка состояния профиля
         setCurrentUser(profile);
       })
       .catch((err) => {
@@ -75,7 +74,6 @@ function App() {
     api
       .editProfile({ name, about })
       .then((profile) => {
-        // установка состояния профиля
         setCurrentUser(profile);
       })
       .catch((err) => {
@@ -182,9 +180,7 @@ function App() {
             navigate("/", { replace: true })
             Promise.all([api.getProfile(), api.getInitialCards()])
               .then(([profile, initialCards]) => {
-                // установка состояния профиля
                 setCurrentUser(profile);
-                // установка состояния карточек
                 setCards(initialCards);
               })
               .catch((err) => {

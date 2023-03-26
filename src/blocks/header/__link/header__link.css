@@ -1,10 +1,18 @@
 .header__link {
-  list-style: none;
-  text-decoration: none;
-  font-family: 'Inter';
+  font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+  list-style: none;
+  text-decoration: none;
   color: #ffffff;
+  -webkit-transition: 0.7s;
+  -o-transition: 0.7s;
+  transition: 0.7s;
+  cursor: pointer;
+}
+
+.header__link:hover {
+  opacity: 0.6;
 }

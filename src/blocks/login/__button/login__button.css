@@ -1,30 +1,31 @@
 .login__button {
-  /* margin-top: 32px; */
-  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 216px 0 0;
   padding: 0;
-  font-family: 'Inter';
+  width: 358px;
+  height: 50px;
+  border: none;
+  font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-  text-align: center;
   color: #000000;
   background: #ffffff;
-  /* padding: 14px 84px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 358px;
-  height: 50px;
+  transition: 0.7s;
   cursor: pointer;
-  /* left: 461px;
-  top: 558px; */
-  /* margin-bottom: 38px; */
-  margin: 216px 0 0;
-  border-radius: 2px;
-  transition: all 0.2s ease-in-out;
 }
 
 .login__button:hover {
   opacity: 0.85;
+}
+
+@media screen and (max-width: 618px) {
+  .login__button {
+    max-width: 282px;
+    padding: 0 22px;
+  }
 }

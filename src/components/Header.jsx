@@ -12,8 +12,8 @@ function Header({ loggedIn, email, onSignOut }) {
       <div>{
         loggedIn
           ?
-          <ul className="header__nav header__link">
-            <li>{email}</li>
+          <ul className="header__nav">
+            <li className='header__nav-email'>{email}</li>
             <li><button onClick={handleClick} className="header__button">Выйти</button></li>
           </ul>
           : <ul className="header__nav">

@@ -1,5 +1,6 @@
 import successImg from '../images/success.svg';
 import faultImg from '../images/fault.svg';
+
 function InfoTooltip({ isOpen, onClose, success, message }) {
     return (
         <div

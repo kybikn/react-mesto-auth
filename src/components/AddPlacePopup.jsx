@@ -39,8 +39,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                     type='text'
                     name='place'
                     placeholder='Название'
-                    minLength='2'
-                    maxLength='30'
+                    minLength={2}
+                    maxLength={30}
                     required
                 />
                 <span className='popup__input-error popup__input-place-error'></span>
