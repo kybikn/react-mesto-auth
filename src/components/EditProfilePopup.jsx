@@ -12,19 +12,28 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         setDescription(currentUser.about);
     }, [isOpen, currentUser]);
 
-    function handleNameChange(e) {
-        setName(e.target.value);
-    }
-    function handleDescriptionChange(e) {
-        setDescription(e.target.value);
-    }
-
     function handleSubmit(e) {
         e.preventDefault();
         onUpdateUser({
             name: name,
             about: description,
         });
+    }
+
+    function handleNameChange(e) {
+        setName(e.target.value);
+    }
+
+    function handleDescriptionChange(e) {
+        setDescription(e.target.value);
+    }
+
+    function handleResetInputDescription(e) {
+        setDescription('');
+    }
+
+    function handleResetInputName(e) {
+        setName('');
     }
 
     return (
@@ -37,7 +46,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             onSubmit={handleSubmit}
         >
             <label className='popup__label'>
-                <span className='popup__input-close popup__input-name-close'>
+                <span className='popup__input-close popup__input-name-close' onClick={handleResetInputName}>
                     &times;
                 </span>
                 <input
@@ -55,7 +64,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                 <span className='popup__input-error popup__input-name-error'></span>
             </label>
             <label className='popup__label'>
-                <span className='popup__input-close popup__input-job-close'>
+                <span className='popup__input-close popup__input-job-close' onClick={handleResetInputDescription}>
                     &times;
                 </span>
                 <input
