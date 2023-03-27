@@ -15,6 +15,8 @@
   line-height: 22px;
   color: #000000;
   background: #ffffff;
+  -webkit-transition: 0.7s;
+  -o-transition: 0.7s;
   transition: 0.7s;
   cursor: pointer;
 }

@@ -1,9 +1,6 @@
 .header__nav {
   padding: 0;
   margin: 5px 0 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
 }
 
 @media screen and (max-width: 618px) {
