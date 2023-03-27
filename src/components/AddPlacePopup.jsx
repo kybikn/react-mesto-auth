@@ -5,6 +5,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     const inputNameRef = useRef();
     const inputLinkrRef = useRef();
 
+    useEffect(() => {
+        inputNameRef.current.value = "";
+        inputLinkrRef.current.value = "";
+    }, [isOpen]);
+
     function handleSubmit(e) {
         e.preventDefault();
         onAddPlace({
@@ -14,10 +19,13 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         e.target.reset();
     }
 
-    useEffect(() => {
+    function handleResetInputPlace() {
         inputNameRef.current.value = "";
+    }
+
+    function handleResetInputLink() {
         inputLinkrRef.current.value = "";
-    }, [isOpen]);
+    }
 
     return (
         <PopupWithForm
@@ -29,7 +37,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
             onSubmit={handleSubmit}
         >
             <label className='popup__label'>
-                <span className='popup__input-close popup__input-place-close'>
+                <span className='popup__input-close popup__input-place-close' onClick={handleResetInputPlace}>
                     &times;
                 </span>
                 <input
@@ -39,14 +47,14 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                     type='text'
                     name='place'
                     placeholder='Название'
-                    minLength='2'
-                    maxLength='30'
+                    minLength={2}
+                    maxLength={30}
                     required
                 />
                 <span className='popup__input-error popup__input-place-error'></span>
             </label>
             <label className='popup__label'>
-                <span className='popup__input-close popup__input-url-close'>
+                <span className='popup__input-close popup__input-url-close' onClick={handleResetInputLink}>
                     &times;
                 </span>
                 <input

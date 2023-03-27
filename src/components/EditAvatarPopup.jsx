@@ -14,6 +14,10 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         e.target.reset();
     }
 
+    function handleResetInputAvatar() {
+        inputAvatarRef.current.value = "";
+    }
+
     return (
         <PopupWithForm
             name='avatar'
@@ -24,7 +28,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
             onSubmit={handleSubmit}
         >
             <label className='popup__label'>
-                <span className='popup__input-close popup__input-avatar-close'>
+                <span className='popup__input-close popup__input-avatar-close' onClick={handleResetInputAvatar}>
                     &times;
                 </span>
                 <input
