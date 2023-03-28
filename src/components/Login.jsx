@@ -55,7 +55,6 @@ const Login = ({ onLogin }) => {
           <button
             type="submit"
             className="login__button"
-            onSubmit={handleSubmit}
           >Войти</button>
         </fieldset>
       </form>

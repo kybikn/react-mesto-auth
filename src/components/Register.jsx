@@ -51,7 +51,6 @@ const Register = ({ onRegister }) => {
             required />
           <button
             type="submit"
-            onSubmit={handleSubmit}
             className="login__button">Зарегистрироваться</button>
         </fieldset>
       </form>

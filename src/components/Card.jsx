@@ -43,7 +43,7 @@ function Card({ card, onCardClick, onCardLike, onDeletePopup }) {
             })
             .catch((err) => {
                 console.log(err);
-                alert(`Ошибка: ${err}`);
+                alert(err);
             })
     }, [card.link, card.name]);
 

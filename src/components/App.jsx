@@ -63,7 +63,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
+        alert(err);
       })
       .finally(() => {
         closeAllPopups();
@@ -78,7 +78,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
+        alert(err);
       })
       .finally(() => {
         closeAllPopups();
@@ -93,7 +93,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
+        alert(err);
       })
       .finally(() => {
         closeAllPopups();
@@ -111,7 +111,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
+        alert(err);
       })
       .finally(() => {
         closeAllPopups();
@@ -131,6 +131,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        alert(err);
         // в случае не успеха
         setInfoTooltipOpen(true);
         setInfoSuccess(false);
@@ -141,8 +142,7 @@ function App() {
 
   function handleRegister(email, password) {
     // идем на сервер
-    auth
-      .register(email, password)
+    auth.register(email, password)
       .then((payload) => {
         // в случае успеха
         if (payload.data) {
@@ -154,6 +154,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        alert(err);
         // в случае не успеха
         setInfoTooltipOpen(true);
         setInfoSuccess(false);
@@ -185,7 +186,7 @@ function App() {
               })
               .catch((err) => {
                 console.log(err);
-                alert(`Ошибка: ${err}`);
+                alert(err);
               });
           }
         })
@@ -207,7 +208,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
+        alert(err);
       });
   }
 
