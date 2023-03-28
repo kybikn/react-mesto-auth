@@ -5,14 +5,14 @@
   max-width: 358px;
   height: 50px;
   border-radius: 2px;
-  font-family: "Inter", Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
   text-align: center;
-  background: #000000;
-  color: #ffffff;
+  background: #000;
+  color: #fff;
   border: none;
   -webkit-transition: 0.7s;
   -o-transition: 0.7s;
