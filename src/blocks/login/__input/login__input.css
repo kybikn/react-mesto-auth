@@ -8,13 +8,13 @@
   line-height: 17px;
   outline: none;
   border: none;
-  border-bottom: 2px solid #cccccc;
+  border-bottom: 2px solid #ccc;
   background: transparent;
-  color: #ffffff;
+  color: #fff;
 }
 
 .login__input::placeholder {
   font-weight: 400;
-  color: #cccccc;
-  background: #000000;
+  color: #ccc;
+  background: #000;
 }
