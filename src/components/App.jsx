@@ -16,6 +16,7 @@ import Login from './Login';
 import ProtectedRouteElement from './ProtectedRoute';
 import InfoTooltip from './InfoTooltip';
 import auth from '../utils/auth.js';
+import NotFound from './NotFound';
 
 function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
@@ -278,9 +279,7 @@ function App() {
           <Route path="/signin" element={<Login onLogin={handleLogin} />} />
           <Route
             path='*'
-            element={<ProtectedRouteElement
-              element={Main}
-            />}
+            element={<NotFound />}
           ></Route>
         </Routes>
         <Footer />
