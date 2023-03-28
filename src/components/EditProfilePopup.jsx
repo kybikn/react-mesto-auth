@@ -20,11 +20,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         });
     }
 
-    function handleNameChange(e) {
+    function handleChangeName(e) {
         setName(e.target.value);
     }
 
-    function handleDescriptionChange(e) {
+    function handleChangeDescription(e) {
         setDescription(e.target.value);
     }
 
@@ -51,7 +51,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                 </span>
                 <input
                     value={name}
-                    onChange={handleNameChange}
+                    onChange={handleChangeName}
                     className='popup__input popup__input_type_name'
                     id='popup__input-name'
                     type='text'
@@ -69,7 +69,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                 </span>
                 <input
                     value={description}
-                    onChange={handleDescriptionChange}
+                    onChange={handleChangeDescription}
                     className='popup__input popup__input_type_job'
                     id='popup__input-job'
                     type='text'
