@@ -36,11 +36,11 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
                 </span>
                 <input
                     value={avatar}
-                    onChange={handleChangeAvatar}
-                    className='popup__input popup__input_type_avatar'
                     id='popup__input-avatar'
                     type='url'
                     name='link'
+                    className='popup__input popup__input_type_avatar'
+                    onChange={handleChangeAvatar}
                     placeholder='Ссылка на аватар'
                     minLength={2}
                     maxLength={40}

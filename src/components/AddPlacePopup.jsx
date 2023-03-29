@@ -49,11 +49,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                 </span>
                 <input
                     value={name}
-                    onChange={handleChangeName}
-                    className='popup__input popup__input_type_place'
                     id='popup__input-place'
                     type='text'
                     name='place'
+                    className='popup__input popup__input_type_place'
+                    onChange={handleChangeName}
                     placeholder='Название'
                     minLength={2}
                     maxLength={30}
@@ -67,11 +67,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                 </span>
                 <input
                     value={link}
-                    onChange={handleChangeLink}
-                    className='popup__input popup__input_type_link'
                     id='popup__input-url'
                     type='url'
                     name='url'
+                    className='popup__input popup__input_type_link'
+                    onChange={handleChangeLink}
                     placeholder='Ссылка на картинку'
                     minLength={2}
                     maxLength={40}

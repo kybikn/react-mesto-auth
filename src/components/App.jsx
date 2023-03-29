@@ -64,7 +64,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       })
       .finally(() => {
         closeAllPopups();
@@ -79,7 +78,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       })
       .finally(() => {
         closeAllPopups();
@@ -94,7 +92,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       })
       .finally(() => {
         closeAllPopups();
@@ -112,7 +109,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       })
       .finally(() => {
         closeAllPopups();
@@ -132,7 +128,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
         // в случае не успеха
         setInfoTooltipOpen(true);
         setInfoSuccess(false);
@@ -155,7 +150,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
         // в случае не успеха
         setInfoTooltipOpen(true);
         setInfoSuccess(false);
@@ -187,7 +181,6 @@ function App() {
               })
               .catch((err) => {
                 console.log(err);
-                alert(err);
               });
           }
         })
@@ -209,7 +202,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       });
   }
 

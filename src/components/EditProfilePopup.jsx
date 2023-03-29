@@ -51,11 +51,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                 </span>
                 <input
                     value={name}
-                    onChange={handleChangeName}
-                    className='popup__input popup__input_type_name'
                     id='popup__input-name'
                     type='text'
                     name='name'
+                    className='popup__input popup__input_type_name'
+                    onChange={handleChangeName}
                     placeholder='Ваше имя'
                     minLength={2}
                     maxLength={40}
@@ -69,11 +69,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                 </span>
                 <input
                     value={description}
-                    onChange={handleChangeDescription}
-                    className='popup__input popup__input_type_job'
                     id='popup__input-job'
                     type='text'
                     name='job'
+                    className='popup__input popup__input_type_job'
+                    onChange={handleChangeDescription}
                     placeholder='Ваша профессия'
                     minLength={2}
                     maxLength={200}
