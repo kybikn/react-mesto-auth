@@ -1,30 +1,37 @@
 import PopupWithForm from './PopupWithForm';
-import { useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-    const inputNameRef = useRef();
-    const inputLinkrRef = useRef();
+    const [name, setName] = useState('');
+    const [link, setLink] = useState('');
 
     useEffect(() => {
-        inputNameRef.current.value = "";
-        inputLinkrRef.current.value = "";
+        setName('');
+        setLink('');
     }, [isOpen]);
 
     function handleSubmit(e) {
         e.preventDefault();
         onAddPlace({
-            name: inputNameRef.current.value,
-            link: inputLinkrRef.current.value
+            name: name,
+            link: link,
         });
-        e.target.reset();
+    }
+
+    function handleChangeName(e) {
+        setName(e.target.value);
+    }
+
+    function handleChangeLink(e) {
+        setLink(e.target.value);
     }
 
     function handleResetInputPlace() {
-        inputNameRef.current.value = "";
+        setName('');
     }
 
     function handleResetInputLink() {
-        inputLinkrRef.current.value = "";
+        setLink('');
     }
 
     return (
@@ -41,7 +48,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                     &times;
                 </span>
                 <input
-                    ref={inputNameRef}
+                    value={name}
+                    onChange={handleChangeName}
                     className='popup__input popup__input_type_place'
                     id='popup__input-place'
                     type='text'
@@ -58,12 +66,15 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                     &times;
                 </span>
                 <input
-                    ref={inputLinkrRef}
+                    value={link}
+                    onChange={handleChangeLink}
                     className='popup__input popup__input_type_link'
                     id='popup__input-url'
                     type='url'
                     name='url'
                     placeholder='Ссылка на картинку'
+                    minLength={2}
+                    maxLength={40}
                     required
                 />
                 <span className='popup__input-error popup__input-url-error'></span>
