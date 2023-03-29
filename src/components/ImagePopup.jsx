@@ -1,17 +1,17 @@
-function ImagePopup({ card, onClose }) {
+import Popup from './Popup';
+
+function ImagePopup({ isOpen, onClose, card }) {
   return (
-    <div
-      className={`popup popup_type_photo ${card && 'popup_active'}`}
-      onClick={onClose}>
+    <Popup
+      isOpen={isOpen}
+      onClose={onClose}
+      name='photo'
+    >
       <figure className='popup__figure'>
         <img className='popup__img' src={card?.link} alt={card?.name} />
-        <button
-          className='popup__close'
-          type='button'
-        ></button>
         <figcaption className='popup__img-title'>{card?.name}</figcaption>
       </figure>
-    </div>
+    </Popup >
   );
 }
 export default ImagePopup;
