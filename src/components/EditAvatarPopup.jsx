@@ -1,24 +1,21 @@
 import PopupWithForm from './PopupWithForm';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import useFormAndValidation from '../hooks/useFormAndValidation';
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
-    const [avatar, setAvatar] = useState('');
+    const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
 
     useEffect(() => {
-        setAvatar('');
-    }, [isOpen]);
+        resetForm();
+    }, [isOpen, resetForm]);
 
     function handleSubmit(e) {
         e.preventDefault();
-        onUpdateAvatar(avatar);
-    }
-
-    function handleChangeAvatar(e) {
-        setAvatar(e.target.value);
+        onUpdateAvatar(values['link']);
     }
 
     function handleResetInputAvatar() {
-        setAvatar('');
+        setValues({ link: '' });
     }
 
     return (
@@ -29,24 +26,25 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
+            isValid={isValid}
         >
             <label className='popup__label'>
                 <span className='popup__input-close popup__input-avatar-close' onClick={handleResetInputAvatar}>
                     &times;
                 </span>
                 <input
-                    value={avatar}
+                    value={values['link'] || ''}
                     id='popup__input-avatar'
                     type='url'
                     name='link'
                     className='popup__input popup__input_type_avatar'
-                    onChange={handleChangeAvatar}
+                    onChange={handleChange}
                     placeholder='Ссылка на аватар'
                     minLength={2}
-                    maxLength={40}
+                    maxLength={500}
                     required
                 />
-                <span className='popup__input-error popup__input-avatar-error'></span>
+                <span className='popup__input-error popup__input-avatar-error'>{errors['link']}</span>
             </label>
         </PopupWithForm>
     )

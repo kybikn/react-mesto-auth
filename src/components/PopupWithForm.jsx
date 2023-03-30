@@ -1,5 +1,7 @@
 import Popup from './Popup';
-function PopupWithForm({ isOpen, onClose, name, title, btnText, children, onSubmit }) {
+
+function PopupWithForm({ isOpen, onClose, name, title, btnText, children, onSubmit, isValid }) {
+
   return (
     <Popup
       name={name}
@@ -16,6 +18,7 @@ function PopupWithForm({ isOpen, onClose, name, title, btnText, children, onSubm
           <fieldset className='popup__box'>
             {children}
             <button
+              disabled={!isValid}
               className='popup__button'
               id={`popup__button-${name}`}
               type='submit'

@@ -1,39 +1,36 @@
 import PopupWithForm from './PopupWithForm';
-import { useState, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import useFormAndValidation from '../hooks/useFormAndValidation';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     const currentUser = useContext(CurrentUserContext);
-    const [name, setName] = useState(currentUser.name);
-    const [description, setDescription] = useState(currentUser.about);
+
+    const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
 
     useEffect(() => {
-        setName(currentUser.name);
-        setDescription(currentUser.about);
-    }, [isOpen, currentUser]);
+        resetForm();
+        setValues({
+            name: currentUser.name,
+            about: currentUser.about
+        })
+    }, [isOpen, currentUser, setValues, resetForm]);
+
 
     function handleSubmit(e) {
         e.preventDefault();
         onUpdateUser({
-            name: name,
-            about: description,
+            name: values['name'],
+            about: values['about']
         });
     }
 
-    function handleChangeName(e) {
-        setName(e.target.value);
+    function handleResetInputName() {
+        setValues({ ...values, name: '' });
     }
 
-    function handleChangeDescription(e) {
-        setDescription(e.target.value);
-    }
-
-    function handleResetInputDescription(e) {
-        setDescription('');
-    }
-
-    function handleResetInputName(e) {
-        setName('');
+    function handleResetInputAbout() {
+        setValues({ ...values, about: '' });
     }
 
     return (
@@ -44,42 +41,43 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
+            isValid={isValid}
         >
             <label className='popup__label'>
                 <span className='popup__input-close popup__input-name-close' onClick={handleResetInputName}>
                     &times;
                 </span>
                 <input
-                    value={name}
+                    value={values['name'] || ''}
                     id='popup__input-name'
                     type='text'
                     name='name'
                     className='popup__input popup__input_type_name'
-                    onChange={handleChangeName}
+                    onChange={handleChange}
                     placeholder='Ваше имя'
                     minLength={2}
                     maxLength={40}
                     required
                 />
-                <span className='popup__input-error popup__input-name-error'></span>
+                <span className='popup__input-error popup__input-name-error'>{errors['name']}</span>
             </label>
             <label className='popup__label'>
-                <span className='popup__input-close popup__input-job-close' onClick={handleResetInputDescription}>
+                <span className='popup__input-close popup__input-job-close' onClick={handleResetInputAbout}>
                     &times;
                 </span>
                 <input
-                    value={description}
+                    value={values['about'] || ''}
                     id='popup__input-job'
                     type='text'
-                    name='job'
+                    name='about'
                     className='popup__input popup__input_type_job'
-                    onChange={handleChangeDescription}
+                    onChange={handleChange}
                     placeholder='Ваша профессия'
                     minLength={2}
                     maxLength={200}
                     required
                 />
-                <span className='popup__input-error popup__input-job-error'></span>
+                <span className='popup__input-error popup__input-job-error'>{errors['about']}</span>
             </label>
         </PopupWithForm>
     )

@@ -1,10 +1,14 @@
 import PopupWithForm from './PopupWithForm';
+import useFormAndValidation from '../hooks/useFormAndValidation';
 
 function DeletePopup({ isOpen, onClose, onDeletePopup, cardToDelete }) {
+    const { isValid } = useFormAndValidation();
+
     function handleSubmit(e) {
         e.preventDefault();
         onDeletePopup(cardToDelete);
     }
+
     return (
         <PopupWithForm
             name='delete'
@@ -13,6 +17,7 @@ function DeletePopup({ isOpen, onClose, onDeletePopup, cardToDelete }) {
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
+            isValid={isValid}
         >
         </PopupWithForm>
     )
