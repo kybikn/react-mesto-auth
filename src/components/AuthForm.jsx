@@ -35,7 +35,7 @@ function AuthForm({ title, formName, onSubmit, formValue, onChange, btnText, chi
                 </fieldset>
                 {children}
             </form>
-        </div>
+        </div >
     )
 }
 

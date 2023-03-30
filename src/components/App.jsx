@@ -61,13 +61,11 @@ function App() {
       .editAvatar(link)
       .then((profile) => {
         setCurrentUser(profile);
+        onClose();
       })
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {
-        closeAllPopups();
-      });
   }
 
   function handleUpdateUser({ name, about }) {
@@ -75,13 +73,11 @@ function App() {
       .editProfile({ name, about })
       .then((profile) => {
         setCurrentUser(profile);
+        onClose();
       })
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {
-        closeAllPopups();
-      });
   }
 
   function handleAddPlaceSubmit({ name, link }) {
@@ -89,13 +85,11 @@ function App() {
       .addNewCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
+        onClose();
       })
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {
-        closeAllPopups();
-      });
   }
 
   function handleDeletePopupSubmit(card) {
@@ -106,13 +100,11 @@ function App() {
           (stateCard) => stateCard._id !== card._id
         );
         setCards(newCards);
+        onClose();
       })
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {
-        closeAllPopups();
-      });
   }
 
   function handleLogin(email, password) {
@@ -127,12 +119,12 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
         // в случае не успеха
         setInfoTooltipOpen(true);
         setInfoSuccess(false);
         setInfoMessage(`Что-то пошло не так!
       Попробуйте ещё раз.`)
+        console.log(err);
       });
   }
 
@@ -149,12 +141,12 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
         // в случае не успеха
         setInfoTooltipOpen(true);
         setInfoSuccess(false);
         setInfoMessage(`Что-то пошло не так!
     Попробуйте ещё раз.`)
+        console.log(err);
       });
   }
 
@@ -162,6 +154,23 @@ function App() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
     setEmail('');
+  }
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        const newCards = cards.map((stateCard) =>
+          stateCard._id === card._id ? newCard : stateCard
+        );
+        setCards(newCards);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -188,63 +197,17 @@ function App() {
     }
   }, [navigate]);
 
-  function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    api
-      .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        const newCards = cards.map((stateCard) =>
-          stateCard._id === card._id ? newCard : stateCard
-        );
-        setCards(newCards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  function onClose() {
+    setEditAvatarPopupOpen(false);
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setDeletePopupOpen(false);
+    setInfoTooltipOpen(false);
+    setSelectedCard(null);
   }
-
-  function closeAllPopups(event) {
-    if (
-      !event ||
-      event.target.classList.contains('popup_active') ||
-      event.target.classList.contains('popup__close')
-    ) {
-      setEditAvatarPopupOpen(false);
-      setEditProfilePopupOpen(false);
-      setAddPlacePopupOpen(false);
-      setDeletePopupOpen(false);
-      setInfoTooltipOpen(false);
-      setSelectedCard(null);
-    }
-  }
-
-  const isOpen =
-    isAddPlacePopupOpen ||
-    isEditAvatarPopupOpen ||
-    isEditProfilePopupOpen ||
-    isDeletePopupOpen ||
-    isInfoTooltipOpen ||
-    selectedCard;
-
-  useEffect(() => {
-    function handleEscClose(event) {
-      if (event.key === 'Escape') {
-        closeAllPopups();
-      }
-    }
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscClose);
-      return () => {
-        document.removeEventListener('keydown', handleEscClose);
-      };
-    }
-  }, [isOpen]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-
       <div className='page'>
         <Header
           loggedIn={loggedIn}
@@ -277,32 +240,33 @@ function App() {
         <Footer />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           onUpdateAvatar={handleUpdateAvatar}
         />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           onUpdateUser={handleUpdateUser}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           onAddPlace={handleAddPlaceSubmit}
         />
         <DeletePopup
           isOpen={isDeletePopupOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           onDeletePopup={handleDeletePopupSubmit}
           cardToDelete={cardToDelete}
         />
         <ImagePopup
           card={selectedCard}
-          onClose={closeAllPopups}
+          onClose={onClose}
+          isOpen={selectedCard}
         />
         <InfoTooltip
           isOpen={isInfoTooltipOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           success={infoSuccess}
           message={infoMessage}
         />

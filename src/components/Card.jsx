@@ -65,7 +65,7 @@ function Card({ card, onCardClick, onCardLike, onDeletePopup }) {
                     <h2 className='card__title'>{card.name}</h2>
                     <div>
                         <button
-                            className={`button card__button-like ${isLiked && 'card__button-like_active'}`}
+                            className={`button ${isLiked ? "card__button-like_active" : ""} card__button-like`}
                             type='button'
                             onClick={handleLikeClick}
                         ></button>
