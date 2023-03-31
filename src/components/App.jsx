@@ -26,6 +26,7 @@ function App() {
   const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({
+    _id: '',
     avatar: avatarImage,
     name: 'Жак-Ив Кусто',
     about: 'Исследователь океана',
@@ -61,14 +62,11 @@ function App() {
       .editAvatar(link)
       .then((profile) => {
         setCurrentUser(profile);
+        onClose();
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       })
-      .finally(() => {
-        closeAllPopups();
-      });
   }
 
   function handleUpdateUser({ name, about }) {
@@ -76,14 +74,11 @@ function App() {
       .editProfile({ name, about })
       .then((profile) => {
         setCurrentUser(profile);
+        onClose();
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       })
-      .finally(() => {
-        closeAllPopups();
-      });
   }
 
   function handleAddPlaceSubmit({ name, link }) {
@@ -91,14 +86,11 @@ function App() {
       .addNewCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
+        onClose();
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       })
-      .finally(() => {
-        closeAllPopups();
-      });
   }
 
   function handleDeletePopupSubmit(card) {
@@ -109,17 +101,14 @@ function App() {
           (stateCard) => stateCard._id !== card._id
         );
         setCards(newCards);
+        onClose();
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       })
-      .finally(() => {
-        closeAllPopups();
-      });
   }
 
-  function handleLogin(email, password) {
+  function handleLogin({ email, password }) {
     // идем на сервер
     auth.login(email, password)
       .then((payload) => {
@@ -131,17 +120,16 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
-        alert(err);
         // в случае не успеха
         setInfoTooltipOpen(true);
         setInfoSuccess(false);
         setInfoMessage(`Что-то пошло не так!
       Попробуйте ещё раз.`)
+        console.log(err);
       });
   }
 
-  function handleRegister(email, password) {
+  function handleRegister({ email, password }) {
     // идем на сервер
     auth.register(email, password)
       .then((payload) => {
@@ -154,13 +142,12 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
-        alert(err);
         // в случае не успеха
         setInfoTooltipOpen(true);
         setInfoSuccess(false);
         setInfoMessage(`Что-то пошло не так!
     Попробуйте ещё раз.`)
+        console.log(err);
       });
   }
 
@@ -169,31 +156,6 @@ function App() {
     setLoggedIn(false);
     setEmail('');
   }
-
-  useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      auth.checkToken(token)
-        .then((payload) => {
-          console.log('data', payload);
-          if (payload.data) {
-            setLoggedIn(true);
-            setEmail(payload.data.email);
-            navigate("/", { replace: true })
-            Promise.all([api.getProfile(), api.getInitialCards()])
-              .then(([profile, initialCards]) => {
-                setCurrentUser(profile);
-                setCards(initialCards);
-              })
-              .catch((err) => {
-                console.log(err);
-                alert(err);
-              });
-          }
-        })
-        .catch(() => { return false });
-    }
-  }, [navigate]);
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -209,50 +171,43 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
       });
   }
 
-  function closeAllPopups(event) {
-    if (
-      !event ||
-      event.target.classList.contains('popup_active') ||
-      event.target.classList.contains('popup__close')
-    ) {
-      setEditAvatarPopupOpen(false);
-      setEditProfilePopupOpen(false);
-      setAddPlacePopupOpen(false);
-      setDeletePopupOpen(false);
-      setInfoTooltipOpen(false);
-      setSelectedCard(null);
-    }
-  }
-
-  const isOpen =
-    isAddPlacePopupOpen ||
-    isEditAvatarPopupOpen ||
-    isEditProfilePopupOpen ||
-    isDeletePopupOpen ||
-    isInfoTooltipOpen ||
-    selectedCard;
-
   useEffect(() => {
-    function handleEscClose(event) {
-      if (event.key === 'Escape') {
-        closeAllPopups();
-      }
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      auth.checkToken(token)
+        .then((payload) => {
+          if (payload.data) {
+            setLoggedIn(true);
+            setEmail(payload.data.email);
+            navigate("/", { replace: true })
+            Promise.all([api.getProfile(), api.getInitialCards()])
+              .then(([profile, initialCards]) => {
+                setCurrentUser(profile);
+                setCards(initialCards);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch(() => { return false });
     }
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscClose);
-      return () => {
-        document.removeEventListener('keydown', handleEscClose);
-      };
-    }
-  }, [isOpen]);
+  }, [navigate]);
+
+  function onClose() {
+    setEditAvatarPopupOpen(false);
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setDeletePopupOpen(false);
+    setInfoTooltipOpen(false);
+    setSelectedCard(null);
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-
       <div className='page'>
         <Header
           loggedIn={loggedIn}
@@ -276,7 +231,8 @@ function App() {
             path='/signup'
             element={<Register onRegister={handleRegister} />}
           />
-          <Route path="/signin" element={<Login onLogin={handleLogin} />} />
+          <Route path="/signin" element={<Login onLogin={handleLogin}
+          />} />
           <Route
             path='*'
             element={<NotFound />}
@@ -285,32 +241,33 @@ function App() {
         <Footer />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           onUpdateAvatar={handleUpdateAvatar}
         />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           onUpdateUser={handleUpdateUser}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           onAddPlace={handleAddPlaceSubmit}
         />
         <DeletePopup
           isOpen={isDeletePopupOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           onDeletePopup={handleDeletePopupSubmit}
           cardToDelete={cardToDelete}
         />
         <ImagePopup
           card={selectedCard}
-          onClose={closeAllPopups}
+          onClose={onClose}
+          isOpen={selectedCard}
         />
         <InfoTooltip
           isOpen={isInfoTooltipOpen}
-          onClose={closeAllPopups}
+          onClose={onClose}
           success={infoSuccess}
           message={infoMessage}
         />

@@ -1,30 +1,29 @@
+import Popup from './Popup';
 import successImg from '../images/success.svg';
 import faultImg from '../images/fault.svg';
 
 function InfoTooltip({ isOpen, onClose, success, message }) {
     return (
-        <div
-            onClick={onClose}
-            className={`popup ${isOpen && 'popup_active'}`}
+        <Popup
+            name='tooltip'
+            isOpen={isOpen}
+            onClose={onClose}
         >
-            <div className='popup__content'>
-                <button
-                    className='popup__close'
-                    type='button'
-                ></button>
+            <div className="popup__content">
                 {success ? < img
-                    className='popup__img-tooltip'
+                    className="popup__img-tooltip"
                     src={successImg}
-                    alt='success'
+                    alt="success"
                 /> : < img
-                    className='popup__img-tooltip'
+                    className="popup__img-tooltip"
                     src={faultImg}
-                    alt='fault'
+                    alt="fault"
                 />
                 }
-                <p className='popup__title'>{message}</p>
+                <p className="popup__title">{message}</p>
             </div>
-        </div>
+
+        </Popup >
     )
 }
 

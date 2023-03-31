@@ -1,64 +1,36 @@
-import { useState } from 'react';
+import AuthForm from './AuthForm';
+import { useEffect } from 'react';
+import useFormAndValidation from '../hooks/useFormAndValidation';
 
 const Login = ({ onLogin }) => {
-  const [formValue, setFormValue] = useState({
-    email: '',
-    password: ''
-  })
+  const { values, errors, isValid, setValues, handleChange, resetForm } = useFormAndValidation();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formValue.email || !formValue.password) {
-      return;
-    }
-    onLogin(formValue.email, formValue.password);
+    onLogin({
+      email: values['email'],
+      password: values['password']
+    });
+    resetForm();
   }
 
   return (
-    <div className="login">
-      <h2 className="login__title">
-        Вход
-      </h2>
-      <form onSubmit={handleSubmit} className="login__form">
-        <fieldset className='login__box'>
-          <input
-            value={formValue.email}
-            id="email"
-            name="email"
-            type="email"
-            className='login__input'
-            placeholder='Email'
-            minLength={3}
-            maxLength={40}
-            onChange={handleChange}
-            required />
-          <input
-            value={formValue.password}
-            id="password"
-            name="password"
-            type="password"
-            className='login__input'
-            placeholder='Пароль'
-            minLength={4}
-            maxLength={20}
-            onChange={handleChange}
-            required />
-          <button
-            type="submit"
-            className="login__button"
-          >Войти</button>
-        </fieldset>
-      </form>
-    </div>
+    <AuthForm
+      formName='signup'
+      title='Вход'
+      btnText='Войти'
+      values={values}
+      errors={errors}
+      isValid={isValid}
+      setValues={setValues}
+      onChange={handleChange}
+      onSubmit={handleSubmit}
+    >
+    </AuthForm>
   )
 }
 

@@ -1,7 +1,0 @@
-@media screen and (max-width: 618px) {
-  .header__burger_active {
-    background: url('../../../../images/close.svg') no-repeat center;
-    width: 20px;
-    height: 20px;
-  }
-}

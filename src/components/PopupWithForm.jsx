@@ -1,34 +1,32 @@
-function PopupWithForm({ title, name, btnText, children, isOpen, onClose, onSubmit }) {
+import Popup from './Popup';
+
+function PopupWithForm({ name, title, isOpen, onClose, btnText, onSubmit, children, isValid }) {
+
   return (
-    <div
-      onClick={onClose}
-      className={`popup popup_type_${name} ${isOpen && 'popup_active'}`}
+    <Popup
+      name={name}
+      isOpen={isOpen}
+      onClose={onClose}
     >
-      <div className='popup__content'>
-        <button
-          className='popup__close'
-          type='button'
-        ></button>
-        <h2 className='popup__title'>{title}</h2>
+      <div className="popup__content">
+        <h2 className="popup__title">{title}</h2>
         <form
+          className="popup__form"
           onSubmit={onSubmit}
-          className={`popup__form popup__form-${name}`}
-          name={`popup__form-${name}`}
-          noValidate
         >
-          <fieldset className='popup__box'>
+          <fieldset className="popup__box">
             {children}
             <button
-              className='popup__button'
-              id={`popup__button-${name}`}
-              type='submit'
+              className="popup__button"
+              type="submit"
+              disabled={!isValid}
             >
               {btnText}
             </button>
           </fieldset>
         </form>
       </div>
-    </div>
+    </Popup >
   );
 }
 
