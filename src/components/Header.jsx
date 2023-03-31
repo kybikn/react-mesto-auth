@@ -20,10 +20,14 @@ function Header({ loggedIn, email, onSignOut }) {
           <div className="header__container">
             <div className="header__box">
               <div className="header__logo"></div>
-              <div className={`header__burger ${isBurgerOpen && 'header__burger_active'}`}
-                onClick={handleBurgerClick}></div>
+              <div className={`burger ${isBurgerOpen && 'burger_active'}`}
+                onClick={handleBurgerClick}>
+                <span className="burger__line burger__line_up"></span>
+                <span className="burger__line burger__line_middle"></span>
+                <span className="burger__line burger__line_down"></span>
+              </div>
             </div>
-            <ul className={`header__nav-user ${isBurgerOpen && 'header__nav-user_mobile'}`}>
+            <ul className={`header__nav-box ${isBurgerOpen && 'header__nav-box_mobile'}`}>
               <li className="header__nav-email">{email}</li>
               <li>
                 <button className="header__button"
