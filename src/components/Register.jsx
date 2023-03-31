@@ -1,32 +1,21 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AuthForm from './AuthForm';
+import useFormAndValidation from '../hooks/useFormAndValidation';
 
 const Register = ({ onRegister }) => {
-  const [formValue, setFormValue] = useState({
-    email: '',
-    password: '',
-  })
+  const { values, errors, isValid, setValues, handleChange, resetForm } = useFormAndValidation();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
-
-  const resetForm = () => {
-    setFormValue({
-      email: '',
-      password: ''
-    });
-  }
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegister(formValue.email, formValue.password);
+    onRegister({
+      email: values['email'],
+      password: values['password']
+    });
     resetForm();
   }
 
@@ -34,14 +23,17 @@ const Register = ({ onRegister }) => {
     <AuthForm
       formName='signin'
       title='Регистрация'
-      formValue={formValue}
-      onSubmit={handleSubmit}
-      onChange={handleChange}
       btnText='Зарегистрироваться'
+      values={values}
+      errors={errors}
+      isValid={isValid}
+      setValues={setValues}
+      onChange={handleChange}
+      onSubmit={handleSubmit}
     >
-      <div className="login__signin">
-        <p className="login__text">Уже зарегистрированы?</p>
-        <Link to="/" className="login__link">Войти</Link>
+      <div className="auth__signin">
+        <p className="auth__text">Уже зарегистрированы?</p>
+        <Link to="/" className="auth__link">Войти</Link>
       </div>
     </AuthForm>
   );

@@ -4,3 +4,7 @@
   opacity: 0.4;
   cursor: pointer;
 }
+
+.popup__input-close:hover {
+  opacity: 0.8;
+}

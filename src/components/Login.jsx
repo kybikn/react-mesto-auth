@@ -1,34 +1,20 @@
-import { useState } from 'react';
 import AuthForm from './AuthForm';
+import { useEffect } from 'react';
+import useFormAndValidation from '../hooks/useFormAndValidation';
 
 const Login = ({ onLogin }) => {
-  const [formValue, setFormValue] = useState({
-    email: '',
-    password: ''
-  })
+  const { values, errors, isValid, setValues, handleChange, resetForm } = useFormAndValidation();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
-
-  const resetForm = () => {
-    setFormValue({
-      email: '',
-      password: ''
-    });
-  }
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formValue.email || !formValue.password) {
-      return;
-    }
-    onLogin(formValue.email, formValue.password);
+    onLogin({
+      email: values['email'],
+      password: values['password']
+    });
     resetForm();
   }
 
@@ -36,10 +22,14 @@ const Login = ({ onLogin }) => {
     <AuthForm
       formName='signup'
       title='Вход'
-      formValue={formValue}
-      onSubmit={handleSubmit}
+      btnText='Войти'
+      values={values}
+      errors={errors}
+      isValid={isValid}
+      setValues={setValues}
       onChange={handleChange}
-      btnText='Войти'>
+      onSubmit={handleSubmit}
+    >
     </AuthForm>
   )
 }
