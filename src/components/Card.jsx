@@ -48,28 +48,28 @@ function Card({ card, onCardClick, onCardLike, onDeletePopup }) {
 
     return (
         <li>
-            <figure className='card'>
+            <figure className="card">
                 <img
-                    className='card__img'
+                    className="card__img"
                     src={imageExist ? card.link : notFoundImg}
                     alt={card.name}
                     onClick={handleClick}
                 />
                 {isOwn &&
                     <button
-                        className='button card__button-remove'
+                        className="button card__button-remove"
                         onClick={handleDeleteClick}
                     >
                     </button>}
-                <figcaption className='card__description'>
-                    <h2 className='card__title'>{card.name}</h2>
+                <figcaption className="card__description">
+                    <h2 className="card__title">{card.name}</h2>
                     <div>
                         <button
-                            className={`button ${isLiked ? "card__button-like_active" : ""} card__button-like`}
-                            type='button'
+                            className={`button ${isLiked ? 'card__button-like_active' : ''} card__button-like`}
+                            type="button"
                             onClick={handleLikeClick}
                         ></button>
-                        <div className='card__num-likes'>{card.likes.length}</div>
+                        <div className="card__num-likes">{card.likes.length}</div>
                     </div>
                 </figcaption>
             </figure>

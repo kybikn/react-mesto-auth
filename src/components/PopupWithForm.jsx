@@ -1,6 +1,6 @@
 import Popup from './Popup';
 
-function PopupWithForm({ isOpen, onClose, name, title, btnText, children, onSubmit, isValid }) {
+function PopupWithForm({ name, title, isOpen, onClose, btnText, onSubmit, children, isValid }) {
 
   return (
     <Popup
@@ -8,20 +8,18 @@ function PopupWithForm({ isOpen, onClose, name, title, btnText, children, onSubm
       isOpen={isOpen}
       onClose={onClose}
     >
-      <div className='popup__content'>
-        <h2 className='popup__title'>{title}</h2>
+      <div className="popup__content">
+        <h2 className="popup__title">{title}</h2>
         <form
+          className="popup__form"
           onSubmit={onSubmit}
-          className={`popup__form popup__form-${name}`}
-          name={`popup__form-${name}`}
         >
-          <fieldset className='popup__box'>
+          <fieldset className="popup__box">
             {children}
             <button
+              className="popup__button"
+              type="submit"
               disabled={!isValid}
-              className='popup__button'
-              id={`popup__button-${name}`}
-              type='submit'
             >
               {btnText}
             </button>

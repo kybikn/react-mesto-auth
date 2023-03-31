@@ -2,8 +2,7 @@ import { useContext } from 'react';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onDeletePopup, cards, onCardLike }) {
-
+function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onDeletePopup }) {
   const currentUser = useContext(CurrentUserContext);
 
   const galleryList = cards.map((card) =>
@@ -11,52 +10,52 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onDeletePo
       key={card._id}
       card={card}
       onCardClick={onCardClick}
-      onDeletePopup={onDeletePopup}
       onCardLike={onCardLike}
+      onDeletePopup={onDeletePopup}
     />
   );
 
   return (
     <main>
-      <section className='profile'>
-        <div className='profile__content'>
+      <section className="profile">
+        <div className="profile__content">
           <div
+            className="profile__avatar-box"
             onClick={onEditAvatar}
-            className='profile__avatar-box'
           >
             <button
-              className='profile__button-avatar'
-              type='button'
+              className="profile__button-avatar"
+              type="button"
             ></button>
             <img
-              className='profile__img profile__avatar-img'
+              className="profile__img profile__avatar-img"
               src={currentUser.avatar}
-              alt='Аватар'
+              alt="Аватар"
             />
           </div>
-          <div className='profile__text'>
-            <div className='profile__name'>
-              <h1 className='profile__title'>{currentUser.name}</h1>
+          <div className="profile__text">
+            <div className="profile__name">
+              <h1 className="profile__title">{currentUser.name}</h1>
               <button
+                className="button profile__button-edit"
+                type="button"
                 onClick={onEditProfile}
-                className='button profile__button-edit'
-                type='button'
               ></button>
             </div>
-            <p className='profile__subtitle'>{currentUser.about}</p>
+            <p className="profile__subtitle">{currentUser.about}</p>
           </div>
           <button
+            className="button profile__button-add"
+            type="button"
             onClick={onAddPlace}
-            className='button profile__button-add'
-            type='button'
           ></button>
         </div>
       </section>
       <section
-        className='gallery'
-        aria-label='Галерея карточек'
+        className="gallery"
+        aria-label="Галерея карточек"
       >
-        <ul className='gallery__list'>
+        <ul className="gallery__list">
           {galleryList}
         </ul>
       </section>

@@ -26,6 +26,7 @@ function App() {
   const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({
+    _id: '',
     avatar: avatarImage,
     name: 'Жак-Ив Кусто',
     about: 'Исследователь океана',
@@ -107,7 +108,7 @@ function App() {
       })
   }
 
-  function handleLogin(email, password) {
+  function handleLogin({ email, password }) {
     // идем на сервер
     auth.login(email, password)
       .then((payload) => {
@@ -128,7 +129,7 @@ function App() {
       });
   }
 
-  function handleRegister(email, password) {
+  function handleRegister({ email, password }) {
     // идем на сервер
     auth.register(email, password)
       .then((payload) => {
@@ -178,7 +179,6 @@ function App() {
     if (token) {
       auth.checkToken(token)
         .then((payload) => {
-          console.log('data', payload);
           if (payload.data) {
             setLoggedIn(true);
             setEmail(payload.data.email);
@@ -231,7 +231,8 @@ function App() {
             path='/signup'
             element={<Register onRegister={handleRegister} />}
           />
-          <Route path="/signin" element={<Login onLogin={handleLogin} />} />
+          <Route path="/signin" element={<Login onLogin={handleLogin}
+          />} />
           <Route
             path='*'
             element={<NotFound />}

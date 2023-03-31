@@ -23,11 +23,11 @@ function useFormAndValidation() {
 
   return {
     values,
-    handleChange,
     errors,
     isValid,
-    resetForm,
     setValues,
+    handleChange,
+    resetForm,
     setIsValid,
   };
 }

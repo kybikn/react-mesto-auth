@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import useFormAndValidation from '../hooks/useFormAndValidation';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-    const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
+    const { values, errors, isValid, setValues, handleChange, resetForm } = useFormAndValidation();
 
     useEffect(() => {
         resetForm();
@@ -12,17 +12,17 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     function handleSubmit(e) {
         e.preventDefault();
         onAddPlace({
-            name: values['place'],
-            link: values['url']
+            name: values['name'],
+            link: values['link']
         });
     }
 
     function handleResetInputPlace() {
-        setValues({ name: '' });
+        setValues({ ...values, name: '' });
     }
 
     function handleResetInputLink() {
-        setValues({ link: '' });
+        setValues({ ...values, link: '' });
     }
 
     return (
@@ -35,41 +35,45 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
             onSubmit={handleSubmit}
             isValid={isValid}
         >
-            <label className='popup__label'>
-                <span className='popup__input-close popup__input-place-close' onClick={handleResetInputPlace}>
+            <label className="popup__label">
+                <span
+                    className="popup__input-close"
+                    onClick={handleResetInputPlace}>
                     &times;
                 </span>
                 <input
-                    value={values['place'] || ''}
-                    id='popup__input-place'
-                    type='text'
-                    name='place'
-                    className='popup__input popup__input_type_place'
+                    className="popup__input"
+                    value={values['name'] || ''}
+                    // id="popup__input-place"
+                    name="name"
+                    type="text"
+                    placeholder="Название"
                     onChange={handleChange}
-                    placeholder='Название'
                     minLength={2}
                     maxLength={40}
                     required
                 />
-                <span className='popup__input-error popup__input-place-error'>{errors['place']}</span>
+                <span className="popup__input-error">{errors['name']}</span>
             </label >
-            <label className='popup__label'>
-                <span className='popup__input-close popup__input-url-close' onClick={handleResetInputLink}>
+            <label className="popup__label">
+                <span
+                    className="popup__input-close"
+                    onClick={handleResetInputLink}>
                     &times;
                 </span>
                 <input
-                    value={values['url'] || ''}
-                    id='popup__input-url'
-                    type='url'
-                    name='url'
-                    className='popup__input popup__input_type_link'
+                    className="popup__input"
+                    value={values['link'] || ''}
+                    // id="popup__input-url"
+                    name="link"
+                    type="url"
+                    placeholder="Ссылка на картинку"
                     onChange={handleChange}
-                    placeholder='Ссылка на картинку'
                     minLength={2}
                     maxLength={500}
                     required
                 />
-                <span className='popup__input-error popup__input-url-error'>{errors['url']}</span>
+                <span className="popup__input-error">{errors['link']}</span>
             </label>
         </PopupWithForm >
     )

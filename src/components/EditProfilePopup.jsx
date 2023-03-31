@@ -5,8 +5,7 @@ import useFormAndValidation from '../hooks/useFormAndValidation';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     const currentUser = useContext(CurrentUserContext);
-
-    const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
+    const { values, errors, isValid, setValues, handleChange, resetForm } = useFormAndValidation();
 
     useEffect(() => {
         resetForm();
@@ -43,41 +42,45 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             onSubmit={handleSubmit}
             isValid={isValid}
         >
-            <label className='popup__label'>
-                <span className='popup__input-close popup__input-name-close' onClick={handleResetInputName}>
+            <label className="popup__label">
+                <span
+                    className="popup__input-close"
+                    onClick={handleResetInputName}>
                     &times;
                 </span>
                 <input
+                    className="popup__input"
                     value={values['name'] || ''}
-                    id='popup__input-name'
-                    type='text'
-                    name='name'
-                    className='popup__input popup__input_type_name'
+                    // id="popup__input-name"
+                    name="name"
+                    type="text"
+                    placeholder="Ваше имя"
                     onChange={handleChange}
-                    placeholder='Ваше имя'
                     minLength={2}
                     maxLength={40}
                     required
                 />
-                <span className='popup__input-error popup__input-name-error'>{errors['name']}</span>
+                <span className="popup__input-error">{errors['name']}</span>
             </label>
-            <label className='popup__label'>
-                <span className='popup__input-close popup__input-job-close' onClick={handleResetInputAbout}>
+            <label className="popup__label">
+                <span
+                    className="popup__input-close"
+                    onClick={handleResetInputAbout}>
                     &times;
                 </span>
                 <input
+                    className="popup__input"
                     value={values['about'] || ''}
-                    id='popup__input-job'
-                    type='text'
-                    name='about'
-                    className='popup__input popup__input_type_job'
+                    // id="popup__input-about"
+                    name="about"
+                    type="text"
+                    placeholder="Ваша профессия"
                     onChange={handleChange}
-                    placeholder='Ваша профессия'
                     minLength={2}
                     maxLength={200}
                     required
                 />
-                <span className='popup__input-error popup__input-job-error'>{errors['about']}</span>
+                <span className="popup__input-error">{errors['about']}</span>
             </label>
         </PopupWithForm>
     )
