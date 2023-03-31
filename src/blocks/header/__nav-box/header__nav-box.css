@@ -1,4 +1,4 @@
-.header__nav-user {
+.header__nav-box {
   display: flex;
   padding: 0;
   margin: 7px 0 0;
@@ -6,7 +6,7 @@
 }
 
 @media screen and (max-width: 618px) {
-  .header__nav-user {
+  .header__nav-box {
     display: none;
   }
 }
