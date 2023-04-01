@@ -26,7 +26,7 @@ function AuthForm({ formName, title, onSubmit, onChange, btnText, children, valu
                         </span>
                         <input
                             className="auth__input"
-                            value={values.email}
+                            value={values.email || ""}
                             name="email"
                             type="email"
                             placeholder="Email"
@@ -43,7 +43,7 @@ function AuthForm({ formName, title, onSubmit, onChange, btnText, children, valu
                         </span>
                         <input
                             className="auth__input"
-                            value={values.password}
+                            value={values.password || ""}
 
                             name="password"
                             type="password"
