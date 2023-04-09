@@ -2,7 +2,7 @@ import PopupWithForm from './PopupWithForm';
 import { useEffect } from 'react';
 import useFormAndValidation from '../hooks/useFormAndValidation';
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
     const { values, errors, isValid, setValues, handleChange, resetForm } = useFormAndValidation();
 
     useEffect(() => {
@@ -29,11 +29,12 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         <PopupWithForm
             name='place'
             title='Новое место'
-            btnText='Создать'
+            btnText={isLoading ? 'Сохранение...' : 'Создать'}
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
             isValid={isValid}
+            isLoading={isLoading}
         >
             <label className="popup__label">
                 <span
@@ -53,7 +54,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                     maxLength={40}
                     required
                 />
-                <span className="popup__input-error">{errors['name']}</span>
+                <span className="popup__input-error">{errors['name'] || ''}</span>
             </label >
             <label className="popup__label">
                 <span
@@ -73,7 +74,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                     maxLength={500}
                     required
                 />
-                <span className="popup__input-error">{errors['link']}</span>
+                <span className="popup__input-error">{errors['link'] || ''}</span>
             </label>
         </PopupWithForm >
     )

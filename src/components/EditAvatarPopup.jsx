@@ -2,7 +2,7 @@ import PopupWithForm from './PopupWithForm';
 import { useEffect } from 'react';
 import useFormAndValidation from '../hooks/useFormAndValidation';
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
     const { values, errors, isValid, setValues, handleChange, resetForm } = useFormAndValidation();
 
     useEffect(() => {
@@ -22,11 +22,12 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         <PopupWithForm
             name='avatar'
             title='Обновить аватар'
-            btnText='Сохранить'
+            btnText={isLoading ? 'Сохранение...' : 'Сохранить'}
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
             isValid={isValid}
+            isLoading={isLoading}
         >
             <label className="popup__label">
                 <span
@@ -46,7 +47,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
                     maxLength={500}
                     required
                 />
-                <span className="popup__input-error">{errors['link']}</span>
+                <span className="popup__input-error">{errors['link'] || ''}</span>
             </label>
         </PopupWithForm>
     )

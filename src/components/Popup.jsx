@@ -14,7 +14,7 @@ const Popup = ({ isOpen, onClose, name, children }) => {
     }, [isOpen, onClose])
 
     const handleOverlay = (e) => {
-        if (e.target === e.currentTarget) {
+        if (e.target === e.currentTarget && isOpen) {
             onClose();
         }
     }

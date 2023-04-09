@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import useFormAndValidation from '../hooks/useFormAndValidation';
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     const currentUser = useContext(CurrentUserContext);
     const { values, errors, isValid, setValues, handleChange, resetForm } = useFormAndValidation();
 
@@ -36,11 +36,12 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         <PopupWithForm
             name='profile'
             title='Редактировать профиль'
-            btnText='Сохранить'
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
             isValid={isValid}
+            isLoading={isLoading}
+            btnText={isLoading ? 'Сохранение...' : 'Сохранить'}
         >
             <label className="popup__label">
                 <span
@@ -60,7 +61,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                     maxLength={40}
                     required
                 />
-                <span className="popup__input-error">{errors['name']}</span>
+                <span className="popup__input-error">{errors['name'] || ''}</span>
             </label>
             <label className="popup__label">
                 <span
@@ -80,7 +81,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                     maxLength={200}
                     required
                 />
-                <span className="popup__input-error">{errors['about']}</span>
+                <span className="popup__input-error">{errors['about'] || ''}</span>
             </label>
         </PopupWithForm>
     )
