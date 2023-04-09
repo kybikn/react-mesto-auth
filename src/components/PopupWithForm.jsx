@@ -1,6 +1,6 @@
 import Popup from './Popup';
 
-function PopupWithForm({ name, title, isOpen, onClose, btnText, onSubmit, children, isValid }) {
+function PopupWithForm({ name, title, isOpen, onClose, btnText, onSubmit, children, isValid, isLoading }) {
 
   return (
     <Popup
@@ -19,7 +19,7 @@ function PopupWithForm({ name, title, isOpen, onClose, btnText, onSubmit, childr
             <button
               className="popup__button"
               type="submit"
-              disabled={!isValid}
+              disabled={!isValid || isLoading}
             >
               {btnText}
             </button>

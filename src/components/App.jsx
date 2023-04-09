@@ -33,6 +33,7 @@ function App() {
   });
   const [cards, setCards] = useState([]);
   const [cardToDelete, setCardToDelete] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [infoSuccess, setInfoSuccess] = useState(false);
@@ -58,6 +59,7 @@ function App() {
   }
 
   function handleUpdateAvatar(link) {
+    setIsLoading(true);
     api
       .editAvatar(link)
       .then((profile) => {
@@ -67,9 +69,13 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   function handleUpdateUser({ name, about }) {
+    setIsLoading(true);
     api
       .editProfile({ name, about })
       .then((profile) => {
@@ -79,9 +85,13 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   function handleAddPlaceSubmit({ name, link }) {
+    setIsLoading(true);
     api
       .addNewCard({ name, link })
       .then((newCard) => {
@@ -91,21 +101,39 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   function handleDeletePopupSubmit(card) {
     api
       .deleteCard(card._id)
       .then(() => {
-        const newCards = cards.filter(
-          (stateCard) => stateCard._id !== card._id
-        );
-        setCards(newCards);
+        setCards((state) => state.filter((stateCard) =>
+          stateCard._id !== card._id
+        ));
         onClose();
       })
       .catch((err) => {
         console.log(err);
       })
+  }
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((stateCard) =>
+          stateCard._id === card._id ? newCard : stateCard
+        ));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleLogin({ email, password }) {
@@ -155,23 +183,6 @@ function App() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
     setEmail('');
-  }
-
-  function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    api
-      .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        const newCards = cards.map((stateCard) =>
-          stateCard._id === card._id ? newCard : stateCard
-        );
-        setCards(newCards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
   useEffect(() => {
@@ -243,16 +254,19 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={onClose}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}
         />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={onClose}
           onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={onClose}
           onAddPlace={handleAddPlaceSubmit}
+          isLoading={isLoading}
         />
         <DeletePopup
           isOpen={isDeletePopupOpen}
