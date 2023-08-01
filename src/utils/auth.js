@@ -35,15 +35,25 @@ class Auth {
     }).then(this._handleResponse);
   };
 
-  checkToken = (token) => {
+  checkToken = () => {
     return fetch(this._checkTokenUrl, {
       method: 'GET',
+      credentials: 'include',
       headers: {
         ...this._headers,
-        Authorization: `Bearer ${token}`,
       },
     }).then(this._handleResponse);
   };
+  // checkToken = (token) => {
+  //   return fetch(this._checkTokenUrl, {
+  //     method: 'GET',
+  //     credentials: 'include',
+  //     headers: {
+  //       ...this._headers,
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   }).then(this._handleResponse);
+  // };
 }
 
 // ----- Инстанс класса Auth --------
