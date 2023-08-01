@@ -186,26 +186,26 @@ function App() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      auth.checkToken(token)
-        .then((payload) => {
-          if (payload.data) {
-            setLoggedIn(true);
-            setEmail(payload.data.email);
-            navigate("/", { replace: true })
-            Promise.all([api.getProfile(), api.getInitialCards()])
-              .then(([profile, initialCards]) => {
-                setCurrentUser(profile);
-                setCards(initialCards);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-        })
-        .catch(() => { return false });
-    }
+    // const token = localStorage.getItem('jwt');
+    // if (token) {
+    auth.checkToken()
+      .then((payload) => {
+        if (payload.data) {
+          setLoggedIn(true);
+          setEmail(payload.data.email);
+          navigate("/", { replace: true })
+          Promise.all([api.getProfile(), api.getInitialCards()])
+            .then(([profile, initialCards]) => {
+              setCurrentUser(profile);
+              setCards(initialCards);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch(() => { return false });
+    // }
   }, [navigate]);
 
   function onClose() {
